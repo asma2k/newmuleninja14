@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="f2c4b1c3-983c-4973-94ad-eb4a8ecfd22b" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="newprojectpocFlow" doc:id="020f07b6-e20e-4c3a-a2e6-9757cf141a6b" >
+		<http:listener doc:name="Listener" doc:id="cb37a35f-52a6-4cf5-91a5-db8ebdeefa5c" config-ref="HTTP_Listener_config" path="/test"/>
+		<logger level="INFO" doc:name="Logger" doc:id="583c5b5e-ad5c-4cab-bdcb-804679918a4e" message="start flow"/>
+		<ee:transform doc:name="Transform Message" doc:id="7d1f77b8-7b6c-490a-be24-3d1dad404937" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+"this is my new project on maven deployment"
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="23872dec-650a-42e9-9c7a-3c06486c6cf4" message="end flow"/>
+	</flow>
+</mule>
